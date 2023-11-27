@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface TextProcessorService {
 
-    Map<Character, Integer> getFrequencyOfChar(String text);
+    Map<Character, Integer> getFrequencyOfChar(String text, boolean ignoreCase);
 }
