@@ -1,0 +1,7 @@
+package ru.t1.probation;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+    }
+}
