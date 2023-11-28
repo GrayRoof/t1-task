@@ -31,8 +31,8 @@ class TextProcessorControllerTest {
     private MockMvc mvc;
 
     @Test
-    void process() throws Exception {
-        List<Map.Entry<Character, Integer>> result = new ArrayList<>(Map.of('a', 5, 'b', 2).entrySet());
+    void shouldReturn200WithList() throws Exception {
+        List<Map.Entry<Character, Integer>> result = new ArrayList<>(Map.of('a', 5).entrySet());
         when(textProcessorService.getFrequencyOfChar(anyString(), anyBoolean()))
                 .thenReturn(result);
         mvc.perform(get("/frequency")
@@ -50,7 +50,7 @@ class TextProcessorControllerTest {
         when(textProcessorService.getFrequencyOfChar(anyString(), anyBoolean()))
                 .thenThrow(exception);
         mvc.perform(
-                get("/")
+                get("/frequency")
                         .param("text", "bbaaaaa")
                         .param("ignoreCase","true")
                 )
