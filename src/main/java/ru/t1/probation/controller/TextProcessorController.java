@@ -21,13 +21,14 @@ public class TextProcessorController {
 
     private final TextProcessorService textProcessorService;
 
+
     @GetMapping("/frequency")
     public List<Map.Entry<Character, Integer>> process(@Valid
                                                @RequestParam(defaultValue = "")
                                                @Size(max = 100, message = "length must be no more than 100 characters")
                                                String text,
                                                        @RequestParam(defaultValue = "true") boolean ignoreCase) {
-        log.info("processing given text...");
+        log.info("SERVER FREQUENCY GET, text is {}, ignoreCase is {}", text, ignoreCase);
         return textProcessorService.getFrequencyOfChar(text, ignoreCase);
     }
 }
