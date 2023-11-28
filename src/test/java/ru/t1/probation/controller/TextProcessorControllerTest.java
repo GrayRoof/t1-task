@@ -9,7 +9,9 @@ import ru.t1.probation.service.TextProcessorService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
@@ -30,14 +32,15 @@ class TextProcessorControllerTest {
 
     @Test
     void process() throws Exception {
-        Map<Character, Integer> result = Map.of('a', 5, 'b', 2);
-        when(textProcessorService.getFrequencyOfChar(anyString(), true))
+        List<Map.Entry<Character, Integer>> result = new ArrayList<>(Map.of('a', 5, 'b', 2).entrySet());
+        when(textProcessorService.getFrequencyOfChar(anyString(), anyBoolean()))
                 .thenReturn(result);
         mvc.perform(get("/frequency")
-                        .param("text", "bbaaaaa"))
+                        .param("text", "bbaaaaa")
+                        .param("ignoreCase", "true"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isMap())
-                .andExpect(jsonPath("$.a", is(5)));
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.[0].a", is(5)));
     }
 
     @Test
