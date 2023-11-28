@@ -7,6 +7,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.t1.probation.service.TextProcessorService;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+import java.util.HashSet;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
@@ -28,12 +31,26 @@ class TextProcessorControllerTest {
     @Test
     void process() throws Exception {
         Map<Character, Integer> result = Map.of('a', 5, 'b', 2);
-        when(textProcessorService.getFrequencyOfChar(anyString()))
+        when(textProcessorService.getFrequencyOfChar(anyString(), true))
                 .thenReturn(result);
-        mvc.perform(get("/")
+        mvc.perform(get("/frequency")
                         .param("text", "bbaaaaa"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.a", is(5)));
+    }
+
+    @Test
+    void shouldReturn400WhenTooLongText() throws Exception {
+        ValidationException exception = new ConstraintViolationException("ValidationException", new HashSet<>());
+
+        when(textProcessorService.getFrequencyOfChar(anyString(), anyBoolean()))
+                .thenThrow(exception);
+        mvc.perform(
+                get("/")
+                        .param("text", "bbaaaaa")
+                        .param("ignoreCase","true")
+                )
+                .andExpect(status().isBadRequest());
     }
 }
