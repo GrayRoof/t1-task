@@ -20,7 +20,7 @@ public class TextProcessorController {
 
     private final TextProcessorService textProcessorService;
 
-    @GetMapping()
+    @GetMapping("/frequency")
     public Map<Character, Integer> process(@Valid
                                                @RequestParam(defaultValue = "")
                                                @Size(max = 100, message = "length must be no more than 100 characters")
