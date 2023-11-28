@@ -10,6 +10,7 @@ import ru.t1.probation.service.TextProcessorService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,11 +22,11 @@ public class TextProcessorController {
     private final TextProcessorService textProcessorService;
 
     @GetMapping("/frequency")
-    public Map<Character, Integer> process(@Valid
+    public List<Map.Entry<Character, Integer>> process(@Valid
                                                @RequestParam(defaultValue = "")
                                                @Size(max = 100, message = "length must be no more than 100 characters")
                                                String text,
-                                           @RequestParam(defaultValue = "true") boolean ignoreCase) {
+                                                       @RequestParam(defaultValue = "true") boolean ignoreCase) {
         log.info("processing given text...");
         return textProcessorService.getFrequencyOfChar(text, ignoreCase);
     }

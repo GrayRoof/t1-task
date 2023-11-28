@@ -2,25 +2,36 @@ package ru.t1.probation.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 public class TextProcessorServiceImpl implements TextProcessorService {
 
     @Override
-    public Map<Character, Integer> getFrequencyOfChar(String text, boolean ignoreCase) {
+    public List<Map.Entry<Character, Integer>> getFrequencyOfChar(String text, boolean ignoreCase) {
         final char[] charsToProcess;
-        Map<Character, Integer> result = new TreeMap<>();
+        Comparator<Map.Entry<Character, Integer>> comparatorByValue = Map.Entry.comparingByValue();
+        final List<Map.Entry<Character, Integer>> result = new ArrayList<>();
 
-        if (ignoreCase) {
-            charsToProcess = text.toLowerCase().toCharArray();
-        } else {
-            charsToProcess = text.toCharArray();
-        }
+        if (!text.isEmpty()) {
+            final HashMap<Character, Integer> frequency = new HashMap<>();
 
-        for (char c : charsToProcess) {
-            result.put(c, result.getOrDefault(c, 0) + 1);
+            if (ignoreCase) {
+                charsToProcess = text.toLowerCase().toCharArray();
+            } else {
+                charsToProcess = text.toCharArray();
+            }
+
+            for (char c : charsToProcess) {
+                frequency.put(c, frequency.getOrDefault(c, 0) + 1);
+            }
+            result.addAll(frequency
+                    .entrySet()
+                    .stream()
+                    .sorted(comparatorByValue.reversed())
+                    .collect(Collectors.toList()));
         }
         return result;
     }
