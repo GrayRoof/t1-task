@@ -1,0 +1,42 @@
+openapi: "3.0.3"
+info:
+  title: "t1_probation_task API"
+  description: |-
+    REST API, вычисляющее частоту встречи символов по заданной строке. Результат отсортирован по убыванию количества вхождений символа в заданную строку.
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /frequency:
+    get:
+      summary: "Реализует подсчет символов в строке."
+      description: "Формирует список с указанием количества вхождений каждого символа в заданную строку."
+      operationId: "process"
+      parameters:
+        - name: "text"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            default: ""
+        - name: "ignoreCase"
+          in: "query"
+          required: false
+          schema:
+            type: "boolean"
+            default: "true"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    a:
+                      type: integer
+                      example: 1
+        "400":
+          description: length must be no more than 100 characters

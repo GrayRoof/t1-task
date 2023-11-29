@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "6c89162f-a97c-4c4f-ad72-2bf0d7c3ab1c",
+		"name": "t1 probation task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23488096"
+	},
+	"item": [
+		{
+			"name": "Тест подсчета количества вхождений символов в строке",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.be.ok;    \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"В теле ответа должна ,быть коллекция из 3х элементов\", function(){\r",
+							"    pm.expect(target.length).is.eq(3);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/frequency?text=hjggg",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"frequency"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "hjggg"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

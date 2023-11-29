@@ -14,7 +14,7 @@ public interface TextProcessorService {
      * <ul>
      * <li>Ключ Character - символ
      * <li>Значение Integer - количество вхождений символа в заданную строку
-     * <ul/>
+     * </ul>
      */
     List<Map.Entry<Character, Integer>> getFrequencyOfChar(String text, boolean ignoreCase);
 }
