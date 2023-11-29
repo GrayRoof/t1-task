@@ -36,5 +36,5 @@ mvn package spring-boot:run
 
 ### Тестирование решения
 После запуска сервер будет доступен по этому пути [http://localhost:8080](http://localhost:8080)
-- [swagger спецификация]
-- [postman]
+- [open API спецификация](https://github.com/GrayRoof/t1-task/blob/dev/src/main/resources/t1_probation_task-openapi.yaml)
+- [postman](https://github.com/GrayRoof/t1-task/blob/dev/src/main/resources/t1%20probation%20task.postman_collection.json)
